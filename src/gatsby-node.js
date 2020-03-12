@@ -7,7 +7,7 @@ const getScoreFromText = (title) => {
 
 const formatDate = (dateString) => {
   const dateArray = dateString.split(' ');
-  return new Date(`${date[1]} ${date[0]}, ${date[2]}`).toISOString();
+  return new Date(`${dateArray[1]} ${dateArray[0]}, ${dateArray[2]}`).toISOString();
 }
 
 exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, { businessId }) => {
