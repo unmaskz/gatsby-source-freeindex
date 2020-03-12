@@ -1,29 +1,38 @@
-# README #
+# gatsby-source-freeindex
 
-This README would normally document whatever steps are necessary to get your application up and running.
+```
+npm i gatsby-source-freeindex
+```
 
-### What is this repository for? ###
+```
+yarn add gatsby-source-freeindex
+```
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Want to show your Freeindex reviews in your Gatsby application? Then this is the package for you.
 
-### How do I get set up? ###
+Install this package, and add `'gatsby-source-freeindex'` to your plugins array in `gatsby-config.js`. 
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+You must have a variable in your `.env` file called `YELL_BUSINESS_ID`. You can find this by visiting your page on Freeindex [here](https://www.yell.com/biz/rapid-formations-london-8353622/). Your Business ID will then be `rapid-formations-london-8353622`.
 
-### Contribution guidelines ###
+Once you have added the environment variable above, you can run `gatsby develop`. Proceed to the GraphQL interface e.g. `localhost:3000/___graphql`.
 
-* Writing tests
-* Code review
-* Other guidelines
+You can then run the following query to fetch all your Freeindex reviews.
 
-### Who do I talk to? ###
+```
+{
+  allYellReview {
+    edges {
+      node {
+        id
+        author
+        title
+        content
+        score
+        createdAt
+      }
+    }
+  }
+}
+```
 
-* Repo owner or admin
-* Other community or team contact
+
