@@ -1,23 +1,23 @@
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
-const moment = require('moment');
 
 const getScoreFromText = (title) => {
   return title.replace('Average rating of ', '').replace('.0', '');
 }
 
-const formatDate = (date) => {
-  return moment(date, "D MMM YYYY");
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toISOString();
 }
 
 exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, { businessId }) => {
   const { createNode } = actions;
 
   if (!businessId || typeof businessId !== 'string') {
-    throw new Error("You must supply a valid identifier from freeindex e.g. '(company-name)_432439'");
+    throw new Error("You must supply your unique business id from freeindex e.g. '432439'");
   }
 
-  const url = `https://www.freeindex.co.uk/profile${businessId}.htm`;
+  const url = `https://www.freeindex.co.uk/customscripts/ajax_reviews.asp?lid=${businessId}`;
   
   return fetch(url)
   .then(res => res.text())
@@ -35,7 +35,7 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, { b
       };
       review.id = $(this).attr('id');
       review.author = $(this).find('.reviewPic .user_image').attr('title');
-      review.content = $(this).find('blockquote').text().split('<span>')[0];
+      review.content = $(this).find('blockquote').text().replace('Moreexpand_more', '');
       review.score = getScoreFromText($(this).find('.ratinglarge').attr('title'));
       review.createdAt = formatDate($(this).find('.reviewTopLine .pull-left.grey.small').text().split('</span>')[1]);
 
