@@ -37,7 +37,7 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, { b
       review.author = $(this).find('.reviewPic .user_image').attr('title');
       review.content = $(this).find('blockquote').text().replace('Moreexpand_more', '');
       review.score = getScoreFromText($(this).find('.ratinglarge').attr('title'));
-      review.createdAt = $(this).find('.reviewTopLine .pull-left.grey.small').text();
+      review.createdAt = formatDate($(this).find('.reviewTopLine .pull-left.grey.small').text().replace(' Posted ', ''));
 
       reviews.push(review);
     });
